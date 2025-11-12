@@ -4,7 +4,7 @@ This repository provides scripts for:
 - Downloading and preparing datasets from images and videos
 - Running YOLO model detections on both images and videos
 - Managing training data and model outputs
-
+- Order follows steps in "excel/flow detection de logos"
 ---
 
 ## Setup Instructions
