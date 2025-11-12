@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from ultralytics import YOLO
 from ultralytics.engine.results import Boxes
-from sort import Sort  # ensure sort.py is in the same folder
+from sort import Sort 
 
 
 def run_yolo_detections_on_videos(videos_folder: str, model_weights_path: str, imgsz: int = 640):

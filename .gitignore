@@ -21,4 +21,4 @@ Thumbs.db
 .idea/
 
 #DB env
-env_db
+env_db.py

@@ -1,0 +1,25 @@
+# Core utilities
+os-sys
+shutilwhich
+requests
+urllib3
+
+# Video and image processing
+opencv-python
+numpy
+Pillow
+
+# Machine learning and YOLO
+torch
+ultralytics
+
+# Data handling
+pandas
+openpyxl
+
+# Filtering / tracking
+filterpy
+sort-tracker
+
+# MySQL utilities (used in dc_utils)
+mysql-connector-python
