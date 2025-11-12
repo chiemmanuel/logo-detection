@@ -1,0 +1,5 @@
+path: ./datasets/dataset_chambe_3
+train: images/train
+val: images/val
+nc: 3
+names: ['escoffier', 'mizuno', 'teamchambe']

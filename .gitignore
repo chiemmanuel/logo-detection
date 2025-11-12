@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# YOLO training runs (keep only selected model weights)
+runs/
+
+# Datasets and large media
+datasets/
+media_for_detection_*/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
