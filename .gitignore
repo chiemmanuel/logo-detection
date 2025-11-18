@@ -22,3 +22,6 @@ Thumbs.db
 
 #DB env
 env_db.py
+
+#DB logs
+tools_mysql.log
