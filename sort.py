@@ -1,5 +1,5 @@
 # Simple Online and Realtime Tracking (SORT)
-# Pure Python implementation by Alex Bewley, https://github.com/abewley/sort
+# Pure Python implementation by this one guy Alex Bewley, https://github.com/abewley/sort
 # Adapted to work with YOLOv8 outputs
 import numpy as np
 from filterpy.kalman import KalmanFilter
@@ -54,7 +54,7 @@ class KalmanBoxTracker:
             [0, 0, 0, 0, 0, 0, 1]
         ])
 
-        # ✅ Corrected H matrix (4x7, consistent lengths)
+        # Corrected H matrix (4x7, consistent lengths)
         self.kf.H = np.array([
             [1, 0, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0, 0],
