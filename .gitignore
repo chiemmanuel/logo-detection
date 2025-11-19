@@ -11,6 +11,7 @@ __pycache__/
 runs/
 
 # Datasets and large media
+test_insert_db/
 datasets/
 media_for_detection_*/
 

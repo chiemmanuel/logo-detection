@@ -48,11 +48,11 @@ def insert_yolo_results(file_name: str, results, specific_config='default'):
         area = width * height
         area_percentage = area / (img_width * img_height) * 100
         if area_percentage >= 10.0:
-            size_str = "small"
+            size_str = "large"
         elif area_percentage >= 1.0:
             size_str = "meduim"
         elif area_percentage >= 0.1:
-            size_str = "large"
+            size_str = "small"
 
         values = (
             study_id,
