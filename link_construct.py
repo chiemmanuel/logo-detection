@@ -15,8 +15,8 @@ VIDEO_TYPES = {
 
 TWITTER_PLATFORM_ID = 3
 
-START_DATE = "2025-10-01 00:00:00"
-END_DATE = "2025-10-31 23:59:59"
+START_DATE = "2025-08-01 00:00:00"
+END_DATE = "2025-10-31 23:59:59" # l'ensemble des publications allant du 01/08 au 31/10
 
 
 # ---------- SQL QUERY ----------
@@ -73,7 +73,7 @@ def get_media_folder(media_type: str, study_id: str) -> str:
 
 def ensure_folders_exist(study_id):
     """Ensure image and video folders exist for a given study."""
-    for folder in [f"images_{study_id}_10", f"videos_{study_id}_10"]: #10 étant le mois de l'année pour le quel je récup les medias 
+    for folder in [f"images_{study_id}", f"videos_{study_id}"]:
         try:
             os.makedirs(folder, exist_ok=True)
         except OSError as e:

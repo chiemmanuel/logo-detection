@@ -15,13 +15,13 @@ def download_images_for_study(study_id: str, purpose: str = "dataset"):
 
     # Define target folder based on purpose
     if purpose == "dataset":
-        dataset_folder = f"datasets/dataset_{study_id}_10"
+        dataset_folder = f"datasets/dataset_{study_id}"
     else:
-        dataset_folder = os.path.join(f"media_detection_{study_id}_10", "images") # 10 correspond au mois de l'année sur le quel la requete du link construct est lancée
+        dataset_folder = os.path.join(f"media_detection_{study_id}_10", "images")
 
     os.makedirs(dataset_folder, exist_ok=True)
 
-    image_folder = f"images_{study_id}_10" # 10 correspond au mois de l'année sur le quel la requete du link construct est lancée
+    image_folder = f"images_{study_id}"
     aws_file = os.path.join(image_folder, "aws_links.txt")
     twitter_file = os.path.join(image_folder, "twitter_links.txt")
 
