@@ -278,6 +278,6 @@ def retry_failed_downloads(study_id: int):
     print(f"\n Retry complete for study {study_id}: {total_fixed}/{total_attempts} fixed successfully.")
 
 
-download_images_for_study("53", purpose="dataset")
+download_images_for_study("53", purpose="media_analysis")
 #download_and_process_videos("53", purpose="media_analysis")
 #retry_failed_downloads(study_id=53)

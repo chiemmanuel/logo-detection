@@ -53,6 +53,8 @@ def insert_yolo_results(file_name: str, results, specific_config='default'):
             size_str = "meduim"
         elif area_percentage >= 0.1:
             size_str = "small"
+        else:
+            size_str = "negligeable"
 
         values = (
             study_id,
@@ -138,7 +140,7 @@ def run_yolo_detections_on_folder(images_folder: str, model_weights_path: str):
     print(f"Average per image: {avg_time:.2f}s\n")
 
 
-image_path = "media_detection_53_10"
+image_path = "test_insert_db/images"
 model_path = "models/team_chambe_3L_fine_tune_v2/weights/best.pt" 
 
 run_yolo_detections_on_folder(images_folder=image_path, model_weights_path=model_path)

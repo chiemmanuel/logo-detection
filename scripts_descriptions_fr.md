@@ -8,7 +8,7 @@ Il distingue les images et les vidéos, en créant automatiquement les dossiers 
 
 - Interroge la base de données pour toutes les publications associées à une étude et une plage de dates données.
 - Génère des liens AWS S3 pour les médias non-Twitter et conserve les URL d’origine pour les médias Twitter.
-- Crée des dossiers nommés selon le type de média et l’ID de l’étude (ex : images_53_10, videos_53_10).
+- Crée des dossiers nommés selon le type de média et l’ID de l’étude (ex : images_53, videos_53).
 - Sauvegarde tous les liens récupérés dans des fichiers texte (aws_links.txt et twitter_links.txt) à l’intérieur de chaque dossier.
 
 # Configuration principale :
@@ -181,7 +181,7 @@ API_URL : endpoint pour la création de tâches dans Label Studio.
 - Avant l’exécution, définissez ces variables d’environnement dans le terminal :
 
 $env:LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED = "true"
-$env:LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT = "C:\Users\JuniorCHIEMMANUELNGU\Desktop\test"
+$env:LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT = "C:\Users\JuniorCHIEMMANUELNGU\Desktop\test" (remplacer avec l'emplacement du dossier qui contient les scripts et datasets)
 
 - Lancez Label Studio :
 label-studio start

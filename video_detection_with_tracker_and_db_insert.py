@@ -13,7 +13,7 @@ from dc_utils import mysql_execute_insert
 
 # ---------- SQL for inserting track-level rows ----------
 INSERT_SQL_VIDEO = """
-INSERT INTO yolo_video_detection2
+INSERT INTO yolo_video_detection
 (study_id, media_id, plateform_id, logo, size, area, areaPercentage, timeBegin, timeEnd, confidence, x1, y1, x2, y2)
 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 """
@@ -22,7 +22,7 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 CONF_THRESHOLD = 0.35
 MIN_CONF_FOR_VALID_TRACK = 0.35
 MIN_VISIBLE_FRAMES = 3
-MAX_INACTIVE_FRAMES = 10
+MAX_INACTIVE_FRAMES = 10 
 IOU_MATCH_THRESHOLD = 0.5
 
 # ---------- Helpers ----------
