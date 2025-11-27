@@ -269,3 +269,75 @@ imgsz: image size for YOLO detection (default 640).
 - Run the script with Python: "python video_analysis_with_tracker.py"
 - Annotated videos will be automatically saved in the detected_videos_with_tracking_fine_tuneV2 folder alongside the source videos.
 - At the end, the script prints total processing time and statistics per video.
+
+8) ### video_detection_with_tracker_and_db_insert.py
+
+This script processes every video in a given folder using a trained YOLO model, detects logos frame-by-frame, tracks them over time using the SORT tracker, aggregates track-level statistics, and finally inserts structured track data into a MySQL database. It is designed for large-scale automated logo detection and temporal analysis.
+
+# What it does:
+
+- Loads a YOLO model from specified weights.
+- Iterates over all video files (.mp4, .mov, .avi) in a target directory.
+- Runs object detection on every frame using YOLO with a configurable confidence threshold.
+- Uses SORT tracking to maintain consistent track IDs across frames.
+- Matches tracker boxes to YOLO detections via IoU.
+- Builds temporal tracks containing timestamps, bounding boxes, labels, maxima, and size estimations.
+- Filters out weak or short-lived tracks based on minimum confidence and visibility.
+- Computes area, area percentage, and categorizes bounding box sizes (“tiny”, “small”, “meduim”, “large”).
+- Converts start and end times to time strings suitable for SQL insertion.
+- Inserts each valid track into a MySQL database using mysql_execute_insert.
+- Prints per-video row insertion counts and processing time.
+- Prints total runtime for all processed videos.
+
+# Main configuration:
+
+- videos_folder: path to the directory containing videos to process.
+
+- model_weights_path: YOLO model .pt weights file.
+
+- imgsz: YOLO inference resolution (default 640).
+
+- db_config: name of the database configuration profile to use.
+
+- Detection & tracking thresholds (all adjustable in the script):
+
+CONF_THRESHOLD
+
+MIN_CONF_FOR_VALID_TRACK
+
+MIN_VISIBLE_FRAMES
+
+MAX_INACTIVE_FRAMES
+
+IOU_MATCH_THRESHOLD
+
+# What the script stores in the database:
+
+Each finalized track produces one row containing:
+
+- study_id, media_id, plateform_id (parsed from filename)
+
+- logo (most frequent YOLO class name in the track)
+
+- bounding box size category
+
+- area and areaPercentage
+
+- timeBegin and timeEnd
+
+- max confidence for the track
+
+- final bounding box (x1, y1, x2, y2)
+
+These are inserted via the SQL template INSERT_SQL_VIDEO.
+
+# How to use it:
+
+- Prepare a folder containing your videos following the file naming format:
+studyId_mediaId_plateformId.mp4
+- Ensure your YOLO weights file exists.
+- Update videos_folder, model_weights_path, and optionally db_config at the bottom of the script.
+- Run the script with:
+python run_yolo_videos_to_db.py
+- The script will process each video, detect + track logos, aggregate track data, and insert results into the MySQL table.
+- At the end, it prints the number of inserted rows per video and the total processing duration.
