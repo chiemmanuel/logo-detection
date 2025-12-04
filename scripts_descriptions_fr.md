@@ -152,7 +152,12 @@ extract_frames_standard(...) : sauvegarde les frames extraites sur disque.
 4) # image_uploader.py
 
 Ce script automatise le téléversement d’images locales vers un projet Label Studio via son API.
-Il gère le téléversement par lots et rafraîchit automatiquement le jeton d’accès.
+Il gère le téléversement par lots et rafraîchit automatiquement le token.
+
+Le token se trouve dans les paraemetrès du compte label studio:
+![alt text](<images utiles/où trouver le token.png>)
+
+Le token doit etre remplacé dans le script "refresh token" car c'est avec lui que je token est rafraichit
 
 # Fonctionnalités principales :
 
@@ -203,6 +208,24 @@ label-studio start
 - Les échecs éventuels seront visibles dans la sortie console.
 
 ########################################################################################################################################
+
+# Comment constituer le dataset 
+
+- Après l'annotation sur label studio, fait un export dans le format "yolo with images" (Les images ne seront pas inclues):
+![alt text](<images utiles/button export.png>)
+![alt text](<images utiles/format d'export.png>)
+
+- L'export va créer un dossier compressé dans les téléchargements
+- Il contient 2 sous dossiers: images et labels, et 2 fichiers: notes et classes
+![alt text](<images utiles/résultat de l'export label studio.png>)
+
+- Copie le contenu du dossier compressé et colle le dans le dossier dataset_"numéro d'études" créé avec le downloader
+- Dans le sous dossier images, créé 2 sous dossiers: train et val et reparti les images 80% - 20%  respectivement
+- Dans le sous dossier labels, créé 2 sous dossiers: train et val et reparti les annotation 80% - 20%  respectivement
+- Les images et les labels doivent correspondre pour l'entrainement du model, pour verifier, utilise le script "find_missing_labels"
+- Un bon dataset doit avoir ce format: ![alt text](<images utiles/format dataset pour entrainement model.png>)
+
+- Après le dataset, modifie le fichier "data.yaml" pour définir le chemin vers le dataset, le nombre de classes à entrainer et les noms des classes sur lesquelles entrainer le model
 
 5) # yolo.py
 
@@ -256,6 +279,7 @@ Il sauvegarde à la fois les images annotées et les résultats structurés au f
 - Exécute la détection sur chaque image.
 - Sauvegarde les images annotées dans detections_images.
 - Sauvegarde les résultats JSON dans detection_jsons.
+- Sauvegarde les résultats en base dans la table yolo_image_detection.
 - Affiche le temps de traitement par image et les statistiques globales.
 
 # Configuration principale :
@@ -278,7 +302,7 @@ Les images annotées et fichiers JSON seront enregistrés automatiquement dans l
 
 #############################################################################################################################
 
-7) video_analysis_with_tracker.py
+7) # video_analysis_with_tracker.py
 
 Ce script applique un modèle YOLO entraîné pour détecter les objets dans toutes les vidéos d’un dossier spécifié.
 Il utilise le suivi SORT pour assurer une cohérence temporelle mais conserve uniquement les boîtes et labels YOLO. Seules les détections au-dessus d’un seuil de confiance sont conservées.
@@ -320,3 +344,95 @@ imgsz : taille d’image d’entrée pour YOLO (par défaut 640).
 Les vidéos annotées seront enregistrées automatiquement dans detected_videos_with_tracking_fine_tuneV2.
 
 Le script affichera un résumé du temps de traitement total et des statistiques par vidéo.
+
+
+########################################################################################################################################
+
+8) # video_detection_with_tracker_and_db_insert.py
+
+Ce script traite chaque vidéo d’un dossier donné en utilisant un modèle YOLO entraîné, détecte les logos image par image, les suit dans le temps grâce au tracker SORT, agrège les statistiques de tracking, puis insère les données structurées dans une base de données MySQL. Il est conçu pour la détection automatisée de logos à grande échelle et pour l’analyse temporelle.
+
+# Ce que le script fait :
+
+- Charge un modèle YOLO à partir des poids spécifiés.
+
+- Parcourt tous les fichiers vidéo (.mp4, .mov, .avi) présents dans un dossier cible.
+
+- Exécute la détection d’objets sur chaque frame avec YOLO en utilisant un seuil de confiance configurable.
+
+- Utilise le tracker SORT pour maintenir des IDs de tracking cohérents entre les frames.
+
+- Associe les boîtes du tracker aux détections YOLO via l’IoU.
+
+- Construit des trackings temporelles contenant timestamps, boîtes englobantes, labels, maxima et estimations de taille.
+
+- Filtre les trackings faibles ou trop courtes selon un minimum de confiance et de visibilité.
+
+- Calcule l’aire, le pourcentage d’aire et catégorise la taille des boîtes (“tiny”, “small”, “medium”, “large”).
+
+- Convertit les timestamps de début et de fin en chaînes temporelles adaptées aux insertions SQL.
+
+- Insère chaque track valide dans la base MySQL via mysql_execute_insert.
+
+- Affiche le nombre d’inserts par vidéo et le temps de traitement.
+
+- Affiche le temps total d’exécution pour toutes les vidéos traitées.
+
+# Configuration principale :
+
+- videos_folder : chemin vers le dossier contenant les vidéos à traiter.
+
+- model_weights_path : fichier de poids YOLO (.pt).
+
+- imgsz : résolution d’inférence YOLO (640 par défaut).
+
+- db_config : nom du profil de configuration base de données à utiliser.
+
+- Seuils de détection et de tracking (tous ajustables dans le script) :
+
+CONF_THRESHOLD
+
+MIN_CONF_FOR_VALID_TRACK
+
+MIN_VISIBLE_FRAMES
+
+MAX_INACTIVE_FRAMES
+
+IOU_MATCH_THRESHOLD
+
+# Ce que le script enregistre dans la base de données :
+
+Chaque track finalisée produit une ligne contenant :
+
+- study_id, media_id, plateform_id (extraits du nom de fichier)
+
+- logo (classe YOLO la plus fréquente dans la tracking)
+
+- catégorie de taille de la bounding box
+
+- area et areaPercentage
+
+- timeBegin et timeEnd
+
+- max confidence de la tracking
+
+- bounding box finale (x1, y1, x2, y2)
+
+Ces données sont insérées via le template SQL INSERT_SQL_VIDEO.
+
+
+# Comment l’utiliser :
+
+- Préparer un dossier contenant les vidéos avec le format de nom suivant :
+studyId_mediaId_plateformId.mp4
+
+- Vérifier que le fichier de poids YOLO existe.
+
+- Mettre à jour videos_folder, model_weights_path et éventuellement db_config en bas du script.
+
+- Exécuter le script avec :
+python run_yolo_videos_to_db.py
+
+Le script traitera chaque vidéo, détectera et suivra les logos, agrégera les données de tracking et insérera les résultats dans la table MySQL.
+
+À la fin, il affiche le nombre de lignes insérées par vidéo et la durée totale du traitement.
