@@ -1,6 +1,6 @@
 import os
 
-dataset_root = r"C:/Users/JuniorCHIEMMANUELNGU/Desktop/test/dataset"
+dataset_root = r"C:\\Users\\JuniorCHIEMMANUELNGU\\Desktop\\test\\datasets\\dataset_53_8-9" # Replace with actual dataset path
 
 def check_labels(set_name):
     images_dir = os.path.join(dataset_root, "images", set_name)

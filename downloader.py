@@ -17,7 +17,7 @@ def download_images_for_study(study_id: str, purpose: str = "dataset"):
     if purpose == "dataset":
         dataset_folder = f"datasets/dataset_{study_id}"
     else:
-        dataset_folder = os.path.join(f"media_detection_{study_id}_10", "images")
+        dataset_folder = os.path.join(f"media_detection_{study_id}", "images")
 
     os.makedirs(dataset_folder, exist_ok=True)
 
