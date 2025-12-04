@@ -1,5 +1,4 @@
 # Core utilities
-os-sys
 shutilwhich
 requests
 urllib3
@@ -19,7 +18,4 @@ openpyxl
 
 # Filtering / tracking
 filterpy
-sort-tracker
 
-# MySQL utilities (used in dc_utils)
-mysql-connector-python

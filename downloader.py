@@ -17,7 +17,7 @@ def download_images_for_study(study_id: str, purpose: str = "dataset"):
     if purpose == "dataset":
         dataset_folder = f"datasets/dataset_{study_id}"
     else:
-        dataset_folder = os.path.join(f"media_detection_{study_id}_10", "images")
+        dataset_folder = os.path.join(f"media_detection_{study_id}", "images")
 
     os.makedirs(dataset_folder, exist_ok=True)
 
@@ -68,7 +68,7 @@ def download_images_for_study(study_id: str, purpose: str = "dataset"):
                 if download_and_save(url, target_path):
                     total_downloaded += 1
 
-    print(f"\n Downloaded {total_downloaded} images for study {study_id} over month 10")
+    print(f"\n Downloaded {total_downloaded} images for study {study_id}")
 
     if error_log:
         error_logfile = os.path.join(dataset_folder, f"errors_{study_id}.log")
@@ -278,6 +278,6 @@ def retry_failed_downloads(study_id: int):
     print(f"\n Retry complete for study {study_id}: {total_fixed}/{total_attempts} fixed successfully.")
 
 
-download_images_for_study("53", purpose="media_analysis")
-#download_and_process_videos("53", purpose="media_analysis")
-#retry_failed_downloads(study_id=53)
+download_images_for_study("60", purpose="dataset")
+#download_and_process_videos("60", purpose="media_analysis")
+#retry_failed_downloads(study_id=60)

@@ -39,7 +39,7 @@ LEFT JOIN plateforms p
 LEFT JOIN publication_medias pmedia
     ON pmedia.id_plateform = spa.id_plateform
     AND pmedia.publication_id = spa.id_publication
-LEFT JOIN publication_media_status pms
+LEFT JOIN publication_medias_status pms
     ON pms.publication_id COLLATE utf8mb4_0900_as_cs = spa.id_publication
 WHERE spa.id_study = %s
   AND spa.flag_validated > 0
@@ -64,9 +64,9 @@ def get_media_folder(media_type: str, study_id: str) -> str:
     """Determine appropriate folder name for media type."""
     media_type = media_type.lower() if media_type else ""
     if media_type in (t.lower() for t in IMAGE_TYPES):
-        return f"images_{study_id}_10"
+        return f"images_{study_id}"
     elif media_type in (t.lower() for t in VIDEO_TYPES):
-        return f"videos_{study_id}_10"
+        return f"videos_{study_id}"
     else:
         return "unknown"
 
@@ -132,7 +132,7 @@ def process_media(rows: list[dict], study_id: str):
 
 def main():
     """Main script entry point."""
-    study_id = "53"
+    study_id = "60"
     ensure_folders_exist(study_id)
 
     try:
