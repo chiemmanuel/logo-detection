@@ -209,7 +209,7 @@ label-studio start
 
 ########################################################################################################################################
 
-# Comment constituer le dataset 
+###### Comment constituer le dataset manuellement
 
 - Après l'annotation sur label studio, fait un export dans le format "yolo with images" (Les images ne seront pas inclues):
 ![alt text](<images utiles/button export.png>)
@@ -226,6 +226,70 @@ label-studio start
 - Un bon dataset doit avoir ce format: ![alt text](<images utiles/format dataset pour entrainement model.png>)
 
 - Après le dataset, modifie le fichier "data.yaml" pour définir le chemin vers le dataset, le nombre de classes à entrainer et les noms des classes sur lesquelles entrainer le model
+
+###### Script pour créer le dataset automatiquement : create_dataset.py
+
+Ce script automatise entièrement la préparation du dataset au format YOLO à partir d’un export Label Studio.
+Il remplace toutes les étapes manuelles décrites précédemment (création des sous-dossiers, séparation train/val, correspondance images–labels).
+
+# Objectif
+
+- À partir d’un dossier Label Studio contenant :
+un sous-dossier images
+un sous-dossier labels
+
+- le script génère automatiquement un dataset YOLO parfaitement structuré : : ![alt text](<images utiles/format dataset pour entrainement model.png>) sans les fichiers notes et classes qui doivent etre rajoutés manuellement
+
+- avec :
+
+un split 80% / 20% pour l’entraînement et la validation
+
+une correspondance exacte entre chaque image et son annotation
+
+la création automatique du dossier de sortie s’il n’existe pas
+
+# Fonctionnement
+
+Le script :
+
+- Lit toutes les images dans input_dataset/images.
+
+- Vérifie que chaque image possède un fichier de label correspondant dans input_dataset/labels.
+
+- Mélange et répartit les paires image/label en 80% train et 20% val.
+
+- Crée automatiquement la structure complète du dossier de sortie.
+
+- Copie chaque image et son label dans les bons sous-dossiers :
+
+images/train ↔ labels/train
+
+images/val ↔ labels/val
+
+Il faut avoir :
+
+- un dataset exporté depuis Label Studio au format “YOLO with images”
+
+- un chemin vers :
+
+le dataset exporté (input)
+
+un dossier de sortie (output), créé automatiquement s’il n’existe pas
+
+- Ensuite copier manuellement les fichiers notes et classes dans le dataset créé
+
+## Avant la suite il faut verifier que le dataset est bien structuré avec le script "find_missing_labels.py", remplace le chemin du dataset à verifier et lance le script, le resultat sur le terminal pour un bon dataset doit etre : ![alt text](<images utiles/find_missing_labels_bon_dataset.png>)
+
+#########################################################################################################################################
+
+##### data.yaml
+
+Le fichier defini les informations utiles pour l'entrainement du model, notammment: 
+
+- Le chemin vers le dataset
+- Le nombre de classes
+
+Avant de passer à l'entrainement, l'ordre des classes dans le data.yaml doit correspondre à celui dans le fichiers "classes" dans le dataset
 
 5) # yolo.py
 
