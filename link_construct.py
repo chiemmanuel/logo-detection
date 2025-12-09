@@ -15,8 +15,8 @@ VIDEO_TYPES = {
 
 TWITTER_PLATFORM_ID = 3
 
-START_DATE = "2025-08-01 00:00:00"
-END_DATE = "2025-10-31 23:59:59" # l'ensemble des publications allant du 01/08 au 31/10
+START_DATE = "2025-09-01 00:00:00"
+END_DATE = "2025-09-30 23:59:59" # l'ensemble des publications allant du 01/08 au 15/08
 
 
 # ---------- SQL QUERY ----------
@@ -64,9 +64,9 @@ def get_media_folder(media_type: str, study_id: str) -> str:
     """Determine appropriate folder name for media type."""
     media_type = media_type.lower() if media_type else ""
     if media_type in (t.lower() for t in IMAGE_TYPES):
-        return f"images_{study_id}"
+        return f"images_{study_id}_09"
     elif media_type in (t.lower() for t in VIDEO_TYPES):
-        return f"videos_{study_id}"
+        return f"videos_{study_id}_09"
     else:
         return "unknown"
 

@@ -23,7 +23,7 @@ CONF_THRESHOLD = 0.35
 MIN_CONF_FOR_VALID_TRACK = 0.35
 MIN_VISIBLE_FRAMES = 3
 MAX_INACTIVE_FRAMES = 10 
-IOU_MATCH_THRESHOLD = 0.5
+IOU_MATCH_THRESHOLD = 0.3
 
 # ---------- Helpers ----------
 def parse_filename(file_name: str) -> Tuple[int, str, int]:
@@ -216,6 +216,6 @@ def run_yolo_videos_to_db(videos_folder: str, model_weights_path: str, imgsz: in
     print(f"All videos processed in {total_duration:.2f} seconds.")
 
 if __name__=="__main__":
-    video_path = "test_insert_db/videos"
-    model_path = "models/team_chambe_3L_fine_tune_v2/weights/best.pt"
+    video_path = "media_detection_60/videos"
+    model_path = "models/etude_60/weights/best.pt"
     run_yolo_videos_to_db(videos_folder=video_path, model_weights_path=model_path, imgsz=640, db_config='default')
