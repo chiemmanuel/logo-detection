@@ -355,7 +355,7 @@ images_folder : chemin vers le dossier contenant les images.
 model_weights_path : chemin vers les poids YOLO entraînés.
 
 classes (optionnel) :
-Liste des IDs de classes à détecter.
+Liste des IDs de classes à détecter. Les ids sont definis dans le fichier "notes" obtenu après l'export depuis label studio
 Exemples :
 [0] pour détecter seulement la classe 0
 [0, 2] pour détecter les classes avec id 0 et 2
@@ -407,7 +407,7 @@ model_weights_path : chemin vers les poids YOLO entraînés.
 imgsz : taille d’image d’entrée pour YOLO (par défaut 640).
 
 classes (optionnel) :
-Liste des IDs de classes à détecter.
+Liste des IDs de classes à détecter. Les ids sont definis dans le fichier "notes" obtenu après l'export depuis label studio
 Exemples :
 [0] pour détecter seulement la classe 0
 [0, 2] pour détecter les classes avec id 0 et 2
@@ -469,7 +469,7 @@ Ce script traite chaque vidéo d’un dossier donné en utilisant un modèle YOL
 - model_weights_path : fichier de poids YOLO (.pt).
 
 - classes (optionnel) :
-  Liste des IDs de classes à détecter.
+  Liste des IDs de classes à détecter. Les ids sont definis dans le fichier "notes" obtenu après l'export depuis label studio.
   Exemples :
   [0] pour détecter seulement la classe 0
   [0, 2] pour détecter les classes avec id 0 et 2
