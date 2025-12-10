@@ -1,5 +1,5 @@
-path: ./datasets/dataset_chambe_3
+path: ./datasets/dataset_60
 train: images/train
 val: images/val
-nc: 3
-names: ['escoffier', 'mizuno', 'teamchambe']
+nc: 2
+names: ["caisse epargne", "lidl"]

@@ -5,9 +5,9 @@ import os
 
 
 API_URL = "http://localhost:8080/api/tasks/"
-PROJECT_ID = 11
-API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6ODA2NDYwNzkxMywiaWF0IjoxNzU3NDA3OTEzLCJqdGkiOiI2MzFkYzc1NmFmNzg0YjY0OTdhYTE0YjgyNjhhYTZkNiIsInVzZXJfaWQiOiIxIn0.NcVDP2nq54xIQkXuk82HJlmBykJ1OE19csLmZV59xf0"
-local_folder = "datasets\\dataset_53"
+PROJECT_ID = 4
+API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6ODA3MTk3MDY3OSwiaWF0IjoxNzY0NzcwNjc5LCJqdGkiOiI2NmZkOTY1NmZiNzI0OTVlYTYyZjMwYjU5Y2JlZjQ4MyIsInVzZXJfaWQiOiIxIn0.3ldMbtSxd6jSPi6w52bD3RinGIOQVFIfjAzBS6VSQ3M"
+local_folder = "datasets\\dataset_60"
 
 headers = {
     "Authorization": f"Bearer {API_TOKEN}",
@@ -15,12 +15,12 @@ headers = {
 }
 
 upload_images = 0
-max_uploads = 5
+max_uploads = 500
 start_time = datetime.now(timezone.utc)
 print(f"Start time: {start_time.isoformat()}")
 
 
-abs_local_folder = os.path.join("C:\\Users\\JuniorCHIEMMANUELNGU\\Desktop\\test", local_folder) # Remplacer le chemin avec celui de base du projet
+abs_local_folder = os.path.join("C:\\git_repos\\logo-detection", local_folder)
 
 for root, dirs, files in os.walk(abs_local_folder):
     for file_name in files:
@@ -31,7 +31,7 @@ for root, dirs, files in os.walk(abs_local_folder):
 
         # Build relative path from DOCUMENT_ROOT folder to file
         abs_file_path = os.path.join(root, file_name)
-        relative_file_path = os.path.relpath(abs_file_path, "C:\\Users\\JuniorCHIEMMANUELNGU\\Desktop\\test").replace("\\", "/")  # Remplacer le chemin avec celui de base du projet
+        relative_file_path = os.path.relpath(abs_file_path, "C:\\git_repos\\logo-detection").replace("\\", "/")
 
         image_url = f"/data/local-files/?d={relative_file_path}"
         print(f"Uploading image: {image_url}")

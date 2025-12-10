@@ -68,7 +68,7 @@ def download_images_for_study(study_id: str, purpose: str = "dataset"):
                 if download_and_save(url, target_path):
                     total_downloaded += 1
 
-    print(f"\n Downloaded {total_downloaded} images for study {study_id} over month 10")
+    print(f"\n Downloaded {total_downloaded} images for study {study_id}")
 
     if error_log:
         error_logfile = os.path.join(dataset_folder, f"errors_{study_id}.log")
@@ -99,7 +99,7 @@ def download_and_process_videos(study_id: str, purpose: str = "dataset", frame_t
     if cut_folder:
         os.makedirs(cut_folder, exist_ok=True)
 
-    video_folder = f"videos_{study_id}_10" # 10 correspond au mois de l'année sur lequel la requete de link construct est lancée
+    video_folder = f"videos_{study_id}" # 10 correspond au mois de l'année sur lequel la requete de link construct est lancée
     video_files = {
         "aws": os.path.join(video_folder, "aws_links.txt"),
         "twitter": os.path.join(video_folder, "twitter_links.txt"),
@@ -278,6 +278,6 @@ def retry_failed_downloads(study_id: int):
     print(f"\n Retry complete for study {study_id}: {total_fixed}/{total_attempts} fixed successfully.")
 
 
-download_images_for_study("53", purpose="media_analysis")
-#download_and_process_videos("53", purpose="media_analysis")
-#retry_failed_downloads(study_id=53)
+download_images_for_study("60", purpose="media_analysis")
+#download_and_process_videos("60", purpose="media_analysis")
+#retry_failed_downloads(study_id=60)

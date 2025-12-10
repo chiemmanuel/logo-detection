@@ -186,7 +186,7 @@ API_URL : endpoint pour la création de tâches dans Label Studio.
 - Avant l’exécution, définissez ces variables d’environnement dans le terminal :
 
 $env:LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED = "true"
-$env:LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT = "C:\Users\JuniorCHIEMMANUELNGU\Desktop\test" (remplacer avec l'emplacement du dossier qui contient les scripts et datasets)
+$env:LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT = "C:\git_repos\logo-detection" (remplacer avec l'emplacement du dossier qui contient les scripts et datasets)
 
 - Lancez Label Studio :
 label-studio start

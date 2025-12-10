@@ -1,6 +1,6 @@
 import os
 
-dataset_root = r"C:\\Users\\JuniorCHIEMMANUELNGU\\Desktop\\test\\datasets\\auto_split_dataset" # Replace with actual dataset path
+dataset_root = r"C:\\git_repos\\logo-detection\\datasets\\dataset_60" # Replace with actual dataset path
 
 def check_labels(set_name):
     images_dir = os.path.join(dataset_root, "images", set_name)
