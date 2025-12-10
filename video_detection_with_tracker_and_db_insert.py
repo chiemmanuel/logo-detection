@@ -136,7 +136,7 @@ def insert_track_to_db(values: Tuple, specific_config='default'):
         print(f"DB insert failed: {e}, values={values}")
 
 # ---------- Main function ----------
-def run_yolo_videos_to_db(videos_folder: str, model_weights_path: str, imgsz: int = 640, db_config='default'):
+def run_yolo_videos_to_db(videos_folder: str, model_weights_path: str, classes: list | None = None, imgsz: int = 640, db_config='default'):
     start_all = time.time()
     if not os.path.exists(videos_folder):
         print(f"Folder not found: {videos_folder}")
@@ -170,7 +170,7 @@ def run_yolo_videos_to_db(videos_folder: str, model_weights_path: str, imgsz: in
             if not ret: break
             frame_idx +=1
             frame_time_s = (frame_idx-1)/fps
-            results = model(frame, imgsz=imgsz, verbose=False)
+            results = model(frame, classes=classes, imgsz=imgsz, verbose=False)
             det = results[0]
             try:
                 det_list = json.loads(det.to_json())

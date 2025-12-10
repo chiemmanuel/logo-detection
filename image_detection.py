@@ -73,7 +73,7 @@ def insert_yolo_results(file_name: str, results, specific_config='default'):
 
         mysql_execute_insert(INSERT_SQL, values, specific_config=specific_config)
 
-def run_yolo_detections_on_folder(images_folder: str, model_weights_path: str):
+def run_yolo_detections_on_folder(images_folder: str, model_weights_path: str, classes: list = None):
     """
     Runs YOLO detections on all images in a folder and inserts results into MySQL.
     """
@@ -105,7 +105,7 @@ def run_yolo_detections_on_folder(images_folder: str, model_weights_path: str):
         print(f"[{idx}/{total}] Processing: {image_file}")
 
         try:
-            results = model(image_path)
+            results = list(model.predict(image_path, classes=classes)) # Les détections uniquement sur le logo team chambe avec id 0 et 2
 
             # Save annotated image
             save_path = os.path.join(detection_img_dir, image_file)
@@ -140,7 +140,7 @@ def run_yolo_detections_on_folder(images_folder: str, model_weights_path: str):
     print(f"Average per image: {avg_time:.2f}s\n")
 
 
-image_path = "test_insert_db/images"
+image_path = "media_detection_53/images"
 model_path = "models/team_chambe_3L_fine_tune_v2/weights/best.pt" 
 
 run_yolo_detections_on_folder(images_folder=image_path, model_weights_path=model_path)

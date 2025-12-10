@@ -13,7 +13,7 @@ runs/
 # Datasets and large media
 test_insert_db/
 datasets/
-media_for_detection_*/
+media_*/
 
 # OS / Editor files
 .DS_Store

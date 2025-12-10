@@ -338,12 +338,14 @@ Il sauvegarde à la fois les images annotées et les résultats structurés au f
 
 # Fonctionnalités principales :
 
-- Charge un modèle YOLO depuis les poids spécifiés (ex : best.pt).
-- Parcourt toutes les images (.jpg, .jpeg, .png) d’un dossier cible.
+- Charge un modèle YOLO depuis les poids spécifiés (par ex. best.pt).
+- Parcourt toutes les images (.jpg, .jpeg, .png) du dossier cible.
+- Permet de spécifier une liste de classes à détecter.
+- Si aucune liste n’est fournie, toutes les classes du modèle sont détectées.
 - Exécute la détection sur chaque image.
-- Sauvegarde les images annotées dans detections_images.
-- Sauvegarde les résultats JSON dans detection_jsons.
-- Sauvegarde les résultats en base dans la table yolo_image_detection.
+- Sauvegarde les images annotées dans le dossier detections_images.
+- Sauvegarde les résultats structurés au format JSON dans detection_jsons.
+- Insère les détections en base dans la table yolo_image_detection.
 - Affiche le temps de traitement par image et les statistiques globales.
 
 # Configuration principale :
@@ -352,13 +354,20 @@ images_folder : chemin vers le dossier contenant les images.
 
 model_weights_path : chemin vers les poids YOLO entraînés.
 
+classes (optionnel) :
+Liste des IDs de classes à détecter.
+Exemples :
+[0] pour détecter seulement la classe 0
+[0, 2] pour détecter les classes avec id 0 et 2
+None pour détecter toutes les classes du modèle
+
 # Utilisation :
 
 - Préparez un dossier contenant les images à traiter.
 
 - Assurez-vous d’avoir les poids du modèle YOLO.
 
-- Mettez à jour images_folder et model_weights_path.
+- Mettez à jour images_folder, model_weights_path et éventuellement classes.
 
 - Exécutez : python image_detection.py
 
@@ -378,6 +387,8 @@ Il utilise le suivi SORT pour assurer une cohérence temporelle mais conserve un
 - Parcourt toutes les vidéos (.mp4, .mov, .avi) d’un dossier cible.
 
 - Exécute la détection image par image.
+    - Permet de spécifier une liste de classes à détecter.
+    - Si aucune liste n’est fournie, toutes les classes du modèle sont détectées.
 
 - Filtre les détections avec une confiance < 0.35.
 
@@ -395,13 +406,20 @@ model_weights_path : chemin vers les poids YOLO entraînés.
 
 imgsz : taille d’image d’entrée pour YOLO (par défaut 640).
 
+classes (optionnel) :
+Liste des IDs de classes à détecter.
+Exemples :
+[0] pour détecter seulement la classe 0
+[0, 2] pour détecter les classes avec id 0 et 2
+None pour détecter toutes les classes du modèle
+
 # Utilisation :
 
 - Préparez un dossier contenant les vidéos à analyser.
 
 - Assurez-vous d’avoir les poids YOLO entraînés.
 
-- Mettez à jour videos_folder et model_weights_path.
+- Mettez à jour videos_folder, model_weights_path et éventuellement classes.
 
 - Exécutez : python video_analysis_with_tracker.py
 
@@ -423,6 +441,8 @@ Ce script traite chaque vidéo d’un dossier donné en utilisant un modèle YOL
 - Parcourt tous les fichiers vidéo (.mp4, .mov, .avi) présents dans un dossier cible.
 
 - Exécute la détection d’objets sur chaque frame avec YOLO en utilisant un seuil de confiance configurable.
+    - Permet de spécifier une liste de classes à détecter.
+    - Si aucune liste n’est fournie, toutes les classes du modèle sont détectées.
 
 - Utilise le tracker SORT pour maintenir des IDs de tracking cohérents entre les frames.
 
@@ -447,6 +467,13 @@ Ce script traite chaque vidéo d’un dossier donné en utilisant un modèle YOL
 - videos_folder : chemin vers le dossier contenant les vidéos à traiter.
 
 - model_weights_path : fichier de poids YOLO (.pt).
+
+- classes (optionnel) :
+  Liste des IDs de classes à détecter.
+  Exemples :
+  [0] pour détecter seulement la classe 0
+  [0, 2] pour détecter les classes avec id 0 et 2
+  None pour détecter toutes les classes du modèle
 
 - imgsz : résolution d’inférence YOLO (640 par défaut).
 
@@ -492,7 +519,7 @@ studyId_mediaId_plateformId.mp4
 
 - Vérifier que le fichier de poids YOLO existe.
 
-- Mettre à jour videos_folder, model_weights_path et éventuellement db_config en bas du script.
+- Mettre à jour videos_folder, model_weights_path, éventuellement classes et éventuellement db_config en bas du script.
 
 - Exécuter le script avec :
 python run_yolo_videos_to_db.py

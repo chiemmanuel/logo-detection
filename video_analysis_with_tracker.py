@@ -8,11 +8,14 @@ from ultralytics.engine.results import Boxes
 from sort import Sort 
 
 
-def run_yolo_detections_on_videos(videos_folder: str, model_weights_path: str, imgsz: int = 640):
+def run_yolo_detections_on_videos(videos_folder: str, model_weights_path: str, imgsz: int = 640, classes: list | None = None):
     """
     Runs YOLO detections on all videos in a folder,
     applies SORT tracking (for temporal stability) but keeps only YOLO boxes & labels.
     Filters out detections with confidence < 0.35.
+    classes: optional list of class IDs to detect.
+             If None -> detects all classes from the model.
+
     """
 
     if not os.path.exists(videos_folder):
@@ -64,7 +67,7 @@ def run_yolo_detections_on_videos(videos_folder: str, model_weights_path: str, i
                 break
 
             # Run YOLO detection
-            results = model(frame, imgsz=imgsz, verbose=False)
+            results = model(frame, classes=classes, imgsz=imgsz, verbose=False)
             det = results[0]
 
             detections_for_sort = []
