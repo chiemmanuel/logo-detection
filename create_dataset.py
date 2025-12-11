@@ -71,7 +71,7 @@ def create_yolo_dataset(
 
 
 create_yolo_dataset(
-    input_dataset_path="datasets/test_create_dataset",
+    input_dataset_path="datasets/temp",
     output_dataset_path="datasets/auto_split_dataset",
     train_ratio=0.8
 )
